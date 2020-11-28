@@ -2,8 +2,6 @@ package user
 
 import "github.com/labstack/echo/v4"
 
-// * h handler
-
 // Routes defines the URL routing for User operations.
 func Routes(e *echo.Echo) {
 	e.GET("/users", users.getAll)

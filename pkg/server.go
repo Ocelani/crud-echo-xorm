@@ -1,6 +1,8 @@
 package pkg
 
 import (
+	"github.com/Ocelani/mercafacil/internal"
+	"github.com/Ocelani/mercafacil/pkg/auth"
 	"github.com/Ocelani/mercafacil/pkg/user"
 
 	"github.com/labstack/echo/v4"
@@ -9,13 +11,17 @@ import (
 
 // Server provides the application services.
 func Server() {
+	internal.Database()
+
 	e := echo.New()
 
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.Logger.Fatal(e.Start("localhost:1323"))
-
+	// Routes
 	user.Routes(e)
+	auth.Routes(e)
+
+	e.Logger.Fatal(e.Start("localhost:1323"))
 }

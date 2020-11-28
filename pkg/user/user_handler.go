@@ -31,6 +31,8 @@ var (
 func (users *handler) createOne(c echo.Context) error {
 	u := &User{
 		ID: seq,
+		// Name: c.FormValue(""),
+		// Name: c.FormValue(),
 	}
 	if err := c.Bind(u); err != nil {
 		return err
