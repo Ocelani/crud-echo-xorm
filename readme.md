@@ -4,7 +4,7 @@ O objetivo deste teste é avaliar seu desempenho em desenvolver uma solução de
 
 ## Especificações
 
-O problema consiste em receber 1 ou mais contatos de celulares através de uma API Rest e adicioná- []los ao
+O problema consiste em receber 1 ou mais contatos de celulares através de uma API Rest e adicioná-los ao
 banco de dados do cliente Macapá ou do cliente VareJão.
 
 ### Fluxo de Ações
@@ -23,13 +23,13 @@ banco de dados do cliente Macapá ou do cliente VareJão.
 
 - [x] Banco de dados Mysql
 - [] Formato do Nome é somente maiúsculas
-- [] O formato de telefone segue o padrão +55 (41) 93030- []6905
+- [] O formato de telefone segue o padrão +55 (41) 93030-6905
 - Em anexo está o sql de criação da tabela
 
 ### Especificações do Cliente VareJão:
 
 - [x] Banco de dados Postgresql
-- [] Formato do Nome é livre
+- [x] Formato do Nome é livre
 - [] O formato de telefone segue o padrão 554130306905
 - Em anexo está o sql de criação da tabela
 
