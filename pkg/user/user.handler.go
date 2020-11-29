@@ -8,11 +8,13 @@ import (
 )
 
 type (
+	// User defines the type for json operations.
 	User struct {
 		ID        int    `json:"id"`
 		Name      string `json:"name"`
 		Cellphone string `json:"cellphone"`
 	}
+
 	handler struct {
 		db map[int]*User
 	}
@@ -27,7 +29,7 @@ var (
 //* Handlers *//
 //*----------*//
 
-// create User
+// createOne User
 func (users *handler) createOne(c echo.Context) error {
 	u := &User{
 		ID: seq,

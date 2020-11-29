@@ -1,18 +1,14 @@
 package pkg
 
 import (
-	"github.com/Ocelani/mercafacil/internal"
 	"github.com/Ocelani/mercafacil/pkg/auth"
 	"github.com/Ocelani/mercafacil/pkg/user"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 // Server provides the application services.
 func Server() {
-	internal.Database()
-
 	e := echo.New()
 
 	// Middleware
