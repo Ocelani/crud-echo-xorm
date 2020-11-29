@@ -8,42 +8,73 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Login route
-func login(c echo.Context) error {
+// type (
+// 	// admin is reponsible for API authentication.
+// 	auth map[string]string // map[username]password
+// )
+
+var (
+	// map[username]password
+	admin = map[string]string{
+		"macapa":  "PASSmacapa",
+		"varejao": "PASSvarejao",
+	}
+)
+
+//*----------*//
+//* Handlers *//
+//*----------*//
+
+// Login route.
+func Login(c echo.Context) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 
-	if username != "rob" || password != "pike" {
-		return echo.ErrUnauthorized // Throws unauthorized error
+	if password != admin[username] {
+		return echo.ErrUnauthorized
 	}
 
-	token := jwt.New(jwt.SigningMethodHS256) // Create token
+	jwt, err := generateToken(username)
+	if err != nil {
+		return err
+	}
 
-	claims := token.Claims.(jwt.MapClaims) // Set claims
-	claims["name"] = "Rob Pike"
+	return c.JSON(http.StatusOK, map[string]string{
+		"token": jwt,
+	})
+}
+
+// Accessible is an unauthenticated route.
+func Accessible(c echo.Context) error {
+	return c.String(http.StatusOK, "Accessible")
+}
+
+// Restricted group is for authorized users.
+func Restricted(c echo.Context) error {
+	user := c.Get("username").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	name := claims["username"].(string)
+
+	return c.String(http.StatusOK, "Welcome "+name+"!")
+}
+
+//*---------*//
+//* Private *//
+//*---------*//
+
+func generateToken(username string) (string, error) {
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	claims := token.Claims.(jwt.MapClaims)
+	claims["username"] = username
 	claims["admin"] = true
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response.
 	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return c.JSON(http.StatusOK, map[string]string{
-		"token": t,
-	})
-}
-
-// Unauthenticated route
-func accessible(c echo.Context) error {
-	return c.String(http.StatusOK, "Accessible")
-}
-
-// Restricted group
-func restricted(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	name := claims["name"].(string)
-	return c.String(http.StatusOK, "Welcome "+name+"!")
+	return t, nil
 }

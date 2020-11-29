@@ -21,6 +21,7 @@
 curl -X GET localhost:1323/
 
 # POST /login
-curl -X POST -d 'username=rob' -d 'password=pike' localhost:1323/login
+curl -X POST -d 'username=macapa' -d 'password=PASSmacapa' localhost:1323/login
+curl -X POST -d 'username=varejao' -d 'password=PASSvarejao' localhost:1323/login
 
 # GET /restricted
