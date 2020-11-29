@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"fmt"
+	"log"
 
 	_ "github.com/go-sql-driver/mysql" // MySQL
 	_ "github.com/lib/pq"              // Postgres
@@ -9,24 +9,67 @@ import (
 	"xorm.io/xorm/names"
 )
 
-// var eg *xorm.EngineGroup
+// Databases connects to the resources databases.
+func Databases() map[string]*xorm.Engine {
+	return map[string]*xorm.Engine{
+		"macapa":  configDB("macapa"),
+		"varejao": configDB("varejao"),
+	}
+}
 
-// Database connects to the database.
-func Database() (*xorm.EngineGroup, error) {
-	master, err := xorm.NewEngine("postgres", "postgres://postgres:root@localhost:5432/master?sslmode=disable")
-	varejaoPG, err := xorm.NewEngine("postgres", "postgres://postgres:root@localhost:5432/postgres?sslmode=disable")
-	macapaMY, err := xorm.NewEngine("mysql", "jdbc:mysql//admin:admin@tcp(localhost:3306)/admin?sslmode=disable")
+func configDB(s string) *xorm.Engine {
+	var (
+		db  *xorm.Engine
+		err error
+	)
 
-	dbs := []*xorm.Engine{varejaoPG, macapaMY}
-	eg, err := xorm.NewEngineGroup(master, dbs)
-	eg.SetMapper(names.SameMapper{})
+	switch s {
+	case "macapa":
+		db, err = xorm.NewEngine("mysql", "admin:admin@/admin")
+		db.SetMapper(names.GonicMapper{})
+		if err = db.Sync2(new(Macapa)); err != nil {
+			log.Fatalln(err)
+		}
 
-	tbs, err := eg.DBMetas()
-	fmt.Println(tbs)
-
-	if err != nil {
-		return nil, err
+	case "varejao":
+		db, err = xorm.NewEngine("postgres", "postgres://admin:admin@localhost:5432/postgres?sslmode=disable")
+		db.SetMapper(names.GonicMapper{})
+		if err = db.Sync2(new(Varejao)); err != nil {
+			log.Fatalln(err)
+		}
 	}
 
-	return eg, nil
+	return db
 }
+
+// func tables(s string, db *xorm.Engine) *xorm.Engine {
+// 	var u *xorm.Session
+
+// 	db.SetMapper(names.GonicMapper{})
+
+// 	switch s {
+// 	case "macapa":
+// 		u = db.Table(new(Macapa))
+// 	case "varejao":
+// 		u = db.Table(new(Varejao))
+// 	}
+// 	// u.Engine().TableName("users")
+
+// 	if err := db.Sync2(u); err != nil {
+// 		log.Fatalln(err)
+// 	}
+
+// 	return db
+// }
+
+// func setupDB(business string) *xorm.Engine {
+// 	// master, err := xorm.NewEngine("postgres", "postgres://postgres:root@localhost:5432/master?sslmode=disable")
+// 	db, err := configDB(business)
+// 	// eg, err := xorm.NewEngineGroup(master, db)
+
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+
+// 	return db
+// }
