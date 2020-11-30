@@ -22,15 +22,15 @@ banco de dados do cliente Macapá ou do cliente VareJão.
 ### Especificações do Cliente Macapá:
 
 - [x] Banco de dados Mysql
-- [] Formato do Nome é somente maiúsculas
-- [] O formato de telefone segue o padrão +55 (41) 93030-6905
+- [ ] Formato do Nome é somente maiúsculas
+- [ ] O formato de telefone segue o padrão +55 (41) 93030-6905
 - Em anexo está o sql de criação da tabela
 
 ### Especificações do Cliente VareJão:
 
 - [x] Banco de dados Postgresql
 - [x] Formato do Nome é livre
-- [] O formato de telefone segue o padrão 554130306905
+- [ ] O formato de telefone segue o padrão 554130306905
 - Em anexo está o sql de criação da tabela
 
 ## Sugestões
