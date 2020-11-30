@@ -16,7 +16,7 @@ banco de dados do cliente Macapá ou do cliente VareJão.
 ### Especificações da API:
 
 - [x] A autenticação será através de um token JWT no Authorization Header
-- [] Cada cliente tem 1 uma chave única
+- [x] Cada cliente tem 1 uma chave única
 - A lista de contatos que será inserido em cada cliente está no arquivo contato.json
 
 ### Especificações do Cliente Macapá:
