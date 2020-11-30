@@ -4,6 +4,7 @@ import (
 	"github.com/Ocelani/mercafacil/internal"
 	"github.com/Ocelani/mercafacil/pkg/auth"
 	"github.com/Ocelani/mercafacil/pkg/user"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -18,8 +19,8 @@ func Server() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	user.Routes(e)
 	auth.Routes(e)
+	user.Routes(e)
 
 	e.Logger.Fatal(e.Start("localhost:1323"))
 }

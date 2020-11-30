@@ -15,62 +15,60 @@ type (
 		Cellphone string `json:"cellphone"`
 	}
 
-	handler struct {
-		db map[int]*User
-	}
+	handler struct{ db map[int]*User }
 )
 
 var (
-	users handler
-	seq   = 1
+	// Handler handles operation methods.
+	h handler
 )
 
 //*----------*//
 //* Handlers *//
 //*----------*//
 
-// createOne User
-func (users *handler) createOne(c echo.Context) error {
-	u := &User{
-		ID: seq,
-		// Name: c.FormValue(""),
-		// Name: c.FormValue(),
-	}
+// CreateOne User
+func (h *handler) CreateOne(c echo.Context) error {
+	u := new(User)
+
 	if err := c.Bind(u); err != nil {
 		return err
 	}
 	return c.JSON(http.StatusCreated, u)
 }
 
-// getOne User
-func (users *handler) getOne(c echo.Context) error {
+// GetOne User
+func (h *handler) GetOne(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	user := users.db[id]
+	user := h.db[id]
+
 	if user == nil {
 		return echo.NewHTTPError(http.StatusNotFound, "user not found")
 	}
 	return c.JSON(http.StatusOK, user)
 }
 
-// update User
-func (users *handler) updateOne(c echo.Context) error {
+// UpdateOne User
+func (h *handler) UpdateOne(c echo.Context) error {
 	u := new(User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	users.db[id].Name = u.Name
-	return c.JSON(http.StatusOK, users.db[id])
+	h.db[id].Name = u.Name
+
+	return c.JSON(http.StatusOK, h.db[id])
 }
 
-// deleteOne User
-func (users *handler) deleteOne(c echo.Context) error {
+// DeleteOne User
+func (h *handler) DeleteOne(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	delete(users.db, id)
+	delete(h.db, id)
+
 	return c.NoContent(http.StatusNoContent)
 }
 
-// getAll Users
-func (users *handler) getAll(c echo.Context) error {
-	return c.JSON(http.StatusOK, users.db)
+// GetAll Users
+func (h *handler) GetAll(c echo.Context) error {
+	return c.JSON(http.StatusOK, h.db)
 }

@@ -6,12 +6,13 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
-// type (
-// 	// admin is reponsible for API authentication.
-// 	auth map[string]string // map[username]password
-// )
+type (
+	// admin is reponsible for API authentication.
+	auth map[string]string // map[username]password
+)
 
 var (
 	// map[username]password
@@ -19,6 +20,11 @@ var (
 		"macapa":  "PASSmacapa",
 		"varejao": "PASSvarejao",
 	}
+
+	// IsLoggedIn is used as a JWT middleware.
+	IsLoggedIn = middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey: []byte("secret"),
+	})
 )
 
 //*----------*//
@@ -73,7 +79,7 @@ func generateToken(username string) (string, error) {
 	// Generate encoded token and send it as response.
 	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
-		return "", err
+		return "error", err
 	}
 
 	return t, nil

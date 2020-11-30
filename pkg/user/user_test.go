@@ -11,26 +11,13 @@ import (
 )
 
 var (
-	userJSON  = `{"id":1,"name":"Jon Snow","cellphone":"5541954122723"}`
+	userJSON  = `{"id":1,"name":"Rob Pike","cellphone":"5541954122723"}`
 	usersTest = handler{
 		db: map[int]*User{
-			1: {1, "Jon Snow", "5541954122723"},
+			1: {1, "Rob Pike", "5541954122723"},
 		},
 	}
 )
-
-// var userJSON = func() (users []*user) {
-// 	f, err := os.Open("./json/contacts-macapa.json")
-// 	dec := json.NewDecoder(f)
-// 	for dec.More() {
-// 		var u user
-// 		if err = dec.Decode(&u); err != nil {
-// 			log.Fatalln(err)
-// 		}
-// 		users = append(users, &u)
-// 	}
-// 	return
-// }
 
 func Test_Create(t *testing.T) {
 	e := echo.New()
@@ -42,7 +29,7 @@ func Test_Create(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	// Assertions
-	if assert.NoError(t, usersTest.createOne(c)) {
+	if assert.NoError(t, usersTest.CreateOne(c)) {
 		assert.Equal(t, http.StatusCreated, rec.Code)
 		assert.Equal(t, userJSON, strings.ReplaceAll(rec.Body.String(), "\n", ""))
 	}
@@ -60,7 +47,7 @@ func Test_GetOne(t *testing.T) {
 	c.SetParamValues("1")
 
 	// Assertions
-	if assert.NoError(t, usersTest.getOne(c)) {
+	if assert.NoError(t, usersTest.GetOne(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Equal(t, userJSON, strings.ReplaceAll(rec.Body.String(), "\n", ""))
 	}
