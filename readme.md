@@ -1,6 +1,6 @@
 # Exercício
 
-Solução em integração entre sistemas.
+Solução para integração entre sistemas.
 
 ## Especificações
 
