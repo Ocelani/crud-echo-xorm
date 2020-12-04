@@ -1,6 +1,6 @@
-# Processo Seletivo Backend Mercafácil
+# Exercício
 
-Solução para integração entre sistemas.
+Solução em integração entre sistemas.
 
 ## Especificações
 
