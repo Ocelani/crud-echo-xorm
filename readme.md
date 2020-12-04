@@ -26,7 +26,7 @@ banco de dados do cliente Macapá ou do cliente VareJão.
 - [ ] O formato de telefone segue o padrão +55 (41) 93030-6905
 - Em anexo está o sql de criação da tabela
 
-### Especificações do Cliente VareJão:
+### Especificações do Cliente Varejão:
 
 - [x] Banco de dados Postgresql
 - [x] Formato do Nome é livre
