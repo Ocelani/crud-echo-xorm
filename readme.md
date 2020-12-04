@@ -1,6 +1,6 @@
 # Processo Seletivo Backend Mercafácil
 
-O objetivo deste teste é avaliar seu desempenho em desenvolver uma solução de integração entre sistemas.
+Solução para integração entre sistemas.
 
 ## Especificações
 
